@@ -2,47 +2,47 @@
 
 export const WORKS = [
   {
-    title: '[项目一]',
+    title: '[Project One]',
     meta: '2026 · Web / 3D',
-    desc: '一句话说明这个项目做了什么。',
+    desc: 'A one-line description of what this project does.',
     tint: '#F2C9B8',
-    body: '这里写项目的详细介绍：做了什么、怎么做的、结果如何。可以换成截图、视频或者外链。',
+    body: 'Describe the project here: what you made, how you made it, and what came of it. Add screenshots, video, or an external link.',
     link: '',
   },
   {
-    title: '[项目二]',
-    meta: '2025 · 设计',
-    desc: '可以放截图、视频或者链接。',
+    title: '[Project Two]',
+    meta: '2025 · Design',
+    desc: 'Add screenshots, video, or a link.',
     tint: '#C9DCEB',
-    body: '这里写项目二的详细介绍。',
+    body: 'Write the full story of Project Two here.',
     link: '',
   },
   {
-    title: '[项目三]',
-    meta: '2024 · 插画',
-    desc: '点开后在屏幕里展开详情。',
+    title: '[Project Three]',
+    meta: '2024 · Illustration',
+    desc: 'Open it to see the details on screen.',
     tint: '#D6DDB8',
-    body: '这里写项目三的详细介绍。',
+    body: 'Write the full story of Project Three here.',
     link: '',
   },
 ];
 
 export const POSTS = [
-  { title: '把一张原画变成 3D 房间', date: '11.05', body: '[文章正文：从一张纸艺原画，到 Tripo 生成模型，再到放进浏览器。]' },
-  { title: '高模烘焙到低模，贴图别碎', date: '11.05', body: '[文章正文：187 万面减到 9 万面，保留原 UV 再烘焙颜色和法线。]' },
-  { title: '给网页做一个昼夜', date: '11.06', body: '[文章正文：用光照关键帧和窗户遮罩，让房间从清晨走到深夜。]' },
-  { title: '唱片机里的 lo-fi 是怎么合成的', date: '11.08', body: '[文章正文：Web Audio 里的和弦、鼓点和黑胶噪声。]' },
-  { title: '[下一篇随笔]', date: '—', body: '[还没写。]' },
-  { title: '[下一篇随笔]', date: '—', body: '[还没写。]' },
+  { title: 'Turning an Illustration into a 3D Room', date: '11.05', body: '[From a paper-cut illustration to a Tripo-generated model, and finally into the browser.]' },
+  { title: 'Baking High Poly to Low Poly', date: '11.05', body: '[Reducing 1.87 million polygons to 90,000 while preserving the original UVs, colors, and normals.]' },
+  { title: 'Giving the Web a Day and Night', date: '11.06', body: '[Using lighting keyframes and window masks to move the room from early morning into late night.]' },
+  { title: 'How the Record Player Makes Lo-fi', date: '11.08', body: '[Chords, drum patterns, and vinyl noise synthesized with the Web Audio API.]' },
+  { title: '[Next Note]', date: '—', body: '[Not written yet.]' },
+  { title: '[Next Note]', date: '—', body: '[Not written yet.]' },
 ];
 
 export const ABOUT = {
-  kicker: '书架 · 第三本',
-  title: '关于我',
-  paragraphs: ['[一段自我介绍：你是谁、在做什么、为什么做了这间纸房间。]', '[第二段：喜欢的东西、正在学的东西。]'],
+  kicker: 'Bookshelf · Volume Three',
+  title: 'About Me',
+  paragraphs: ['[Introduce yourself here: who you are, what you make, and why you built this paper room.]', '[Share what you love and what you are currently learning.]'],
   links: [
-    { label: '邮箱', value: '[your@mail]', href: '#' },
+    { label: 'Email', value: '[your@mail]', href: '#' },
     { label: 'GitHub', value: '[@handle]', href: '#' },
-    { label: '小红书', value: '[@handle]', href: '#' },
+    { label: 'RedNote', value: '[@handle]', href: '#' },
   ],
 };

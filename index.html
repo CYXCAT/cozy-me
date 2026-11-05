@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>纸上的一天</title>
-  <meta name="description" content="走进一间用纸剪出来的房间：显示器里是作品，茶几上的本子是随笔，书架上有关于我。" />
+  <title>A Day on Paper</title>
+  <meta name="description" content="Step into a room cut from paper: projects live on the monitor, notes rest on the coffee table, and a book on the shelf tells you more about me." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;600&family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet" />
@@ -16,32 +16,32 @@
 
   <!-- chrome -->
   <header class="wordmark">
-    <p class="wordmark__cn">纸上的一天</p>
+    <p class="wordmark__cn">A Day on Paper</p>
     <p class="wordmark__en">A DAY ON PAPER</p>
   </header>
-  <nav class="nav" aria-label="机位导航">
-    <button data-go="home">首页</button>
-    <button data-go="works">作品</button>
-    <button data-go="notes">随笔</button>
-    <button data-go="about">关于</button>
+  <nav class="nav" aria-label="Room navigation">
+    <button class="paper-btn btn-small" data-go="home">Home</button>
+    <button class="paper-btn btn-small" data-go="works">Works</button>
+    <button class="paper-btn btn-small" data-go="notes">Notes</button>
+    <button class="paper-btn btn-small" data-go="about">About</button>
   </nav>
 
-  <div id="pins" aria-label="房间里可以用的东西"></div>
+  <div id="pins" aria-label="Interactive objects in the room"></div>
 
   <p class="hints" id="hints"></p>
   <div class="pills">
-    <button class="pill" id="back-btn" hidden></button>
-    <button class="pill pill--time" id="time-btn" title="点一下换个时间，或者滚动鼠标">
+    <button class="pill paper-btn btn-small" id="back-btn" hidden></button>
+    <button class="pill pill--time paper-btn btn-small" id="time-btn" title="Click to change the time, or use the scroll wheel">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
-      <span id="time-text">16:20</span> <span id="time-period">午后</span>
+      <span id="time-text">16:20</span> <span id="time-period">afternoon</span>
     </button>
-    <button class="pill pill--sound" id="sound-btn" aria-pressed="false">声音 关</button>
+    <button class="pill pill--sound paper-btn btn-small" id="sound-btn" aria-pressed="false">Sound Off</button>
   </div>
 
   <!-- works: shown on the monitor -->
   <div class="screen" id="screen" aria-hidden="true">
-    <div class="screen__inner" id="screen-inner">
-      <div class="screen__bar"><b>作品集</b><span>文件</span><span>显示</span><span>帮助</span><span class="screen__clock" id="screen-clock">16:20</span></div>
+    <div class="screen__inner paper border border-3" id="screen-inner">
+      <div class="screen__bar"><b>Portfolio</b><span>File</span><span>View</span><span>Help</span><span class="screen__clock" id="screen-clock">16:20</span></div>
       <div class="screen__body" id="screen-body"></div>
     </div>
   </div>
@@ -49,18 +49,18 @@
   <!-- notes: the notebook lifted to the camera -->
   <div class="notebook" id="notebook" aria-hidden="true">
     <div class="notebook__rings" aria-hidden="true"></div>
-    <div class="notebook__page" id="notebook-page"></div>
+    <div class="notebook__page paper border border-4" id="notebook-page"></div>
   </div>
 
   <!-- about: the book pulled from the shelf -->
-  <article class="bookpage" id="bookpage" aria-hidden="true"></article>
+  <article class="bookpage paper border border-2" id="bookpage" aria-hidden="true"></article>
 
   <!-- loader -->
   <div id="loader">
-    <p class="loader__cn">纸上的一天</p>
+    <p class="loader__cn">A Day on Paper</p>
     <p class="loader__en">A DAY ON PAPER</p>
     <div class="loader__bar"><span id="loader-fill"></span></div>
-    <p class="loader__hint" id="loader-hint">正在把房间剪出来… 0%</p>
+    <p class="loader__hint" id="loader-hint">Cutting out the room… 0%</p>
   </div>
 
   <script type="module" src="/src/main.js"></script>

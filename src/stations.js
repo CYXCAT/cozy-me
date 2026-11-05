@@ -14,15 +14,15 @@ export const STATIONS = {
 // Things you can use, per station. r = pick radius in metres.
 export const HOTSPOTS = {
   home: [
-    { id: 'monitor', pos: [-1.85, 1.75, 1.03], r: 0.42, tag: '显示器 · W 看作品', action: 'works' },
-    { id: 'notebook', pos: [0.02, 1.0, 0.5], r: 0.3, tag: '随笔本 · R 拿起来', action: 'notes' },
-    { id: 'shelf', pos: [-1.35, 3.72, -1.92], r: 0.4, tag: '书架 · B 关于我', action: 'about' },
-    { id: 'window', pos: [0.03, 2.75, -2.2], r: 0.6, tag: '窗 · 点一下下雨', action: 'rain' },
-    { id: 'clock', pos: [1.639, 3.806, -2.25], r: 0.3, tag: '挂钟 · 拖动指针改时间', action: 'clock' },
+    { id: 'monitor', pos: [-1.85, 1.75, 1.03], r: 0.42, tag: 'Monitor · W to view works', action: 'works' },
+    { id: 'notebook', pos: [0.02, 1.0, 0.5], r: 0.3, tag: 'Notebook · R to pick up', action: 'notes' },
+    { id: 'shelf', pos: [-1.35, 3.72, -1.92], r: 0.4, tag: 'Bookshelf · B for about', action: 'about' },
+    { id: 'window', pos: [0.03, 2.75, -2.2], r: 0.6, tag: 'Window · Click for rain', action: 'rain' },
+    { id: 'clock', pos: [1.639, 3.806, -2.25], r: 0.3, tag: 'Clock · Drag the hands', action: 'clock' },
   ],
   about: [
-    { id: 'book', pos: [-1.374, 3.767, -1.9], r: 0.18, tag: '这一本 · 关于我', action: 'none' },
-    { id: 'lamp', pos: [-1.65, 3.7, -1.31], r: 0.3, tag: '吊灯 · 开 / 关', action: 'lamp' },
+    { id: 'book', pos: [-1.374, 3.767, -1.9], r: 0.18, tag: 'This book · About me', action: 'none' },
+    { id: 'lamp', pos: [-1.65, 3.7, -1.31], r: 0.3, tag: 'Pendant lamp · On / Off', action: 'lamp' },
   ],
   works: [],
   notes: [],
@@ -40,16 +40,16 @@ export const SCREEN_CORNERS = [
 export const BOOK = { pos: [-1.374, 3.765, -1.915], size: [0.075, 0.3, 0.05] };
 
 export const HINTS = {
-  home: 'W 看作品 · R 拿起本子 · B 书架 · M 唱片机 · T 俯视 · 拖动 环顾 · 滚轮 拨时间',
-  works: '← → 换作品 · Enter 打开 · Esc 回到房间',
-  notes: '点一行读文章 · Esc 放下本子',
-  about: '点吊灯开关灯 · Esc 回到房间',
-  top: '从上面看看这间房 · Esc 回到房间 · 滚轮 拨时间',
+  home: 'W Works · R Notebook · B Bookshelf · M Record player · T Top view · Drag to look · Scroll through time',
+  works: '← → Browse · Enter to open · Esc back to room',
+  notes: 'Choose an entry to read · Esc to put down',
+  about: 'Click the lamp to toggle it · Esc back to room',
+  top: 'A view from above · Esc back to room · Scroll through time',
 };
 
 export const BACK_LABEL = {
-  works: '回到房间 · Esc',
-  notes: '放下本子 · Esc',
-  about: '放回书架 · Esc',
-  top: '回到房间 · Esc',
+  works: 'Back to room · Esc',
+  notes: 'Put down · Esc',
+  about: 'Return to shelf · Esc',
+  top: 'Back to room · Esc',
 };

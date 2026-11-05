@@ -1,3 +1,4 @@
+import 'papercss/dist/paper.min.css';
 import './style.css';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -513,16 +514,16 @@ function renderWorks() {
           <h3>${w.title}</h3>
           <p class="work-detail__meta">${w.meta}</p>
           <p>${w.body}</p>
-          ${w.link ? `<a href="${w.link}" target="_blank" rel="noopener">打开链接 ↗</a>` : ''}
+          ${w.link ? `<a href="${w.link}" target="_blank" rel="noopener">Open link ↗</a>` : ''}
         </div>
       </div>
-      <p class="screen__hint">Backspace 返回列表 · ← → 上一个 / 下一个</p>`;
+      <p class="screen__hint">Backspace to list · ← → Previous / Next</p>`;
   } else {
     screenBody.innerHTML = `
-      <p class="screen__path">~/works · ${WORKS.length} 个项目</p>
+      <p class="screen__path">~/works · ${WORKS.length} projects</p>
       <div class="works">
         ${WORKS.map(
-          (w, i) => `<button class="work${i === state.workIndex ? ' is-on' : ''}" data-i="${i}">
+          (w, i) => `<button class="work card border border-2${i === state.workIndex ? ' is-on' : ''}" data-i="${i}">
             <span class="work__thumb" style="background:${w.tint}"></span>
             <span class="work__title">${w.title}</span>
             <span class="work__desc">${w.desc}</span>
@@ -530,7 +531,7 @@ function renderWorks() {
           </button>`
         ).join('')}
       </div>
-      <p class="screen__hint">← → 选择 · Enter 打开 · 屏幕上的东西都可以点</p>`;
+      <p class="screen__hint">← → Select · Enter to open · Everything on screen is clickable</p>`;
   }
 }
 screenBody.addEventListener('click', (e) => {
@@ -580,13 +581,13 @@ function renderNotebook() {
       <div class="nb-head"><h2>${p.title}</h2></div>
       <p class="nb-date">${p.date}</p>
       <div class="nb-article"><p>${p.body}</p></div>
-      <button class="nb-back" data-back>← 回到目录</button>`;
+      <button class="nb-back" data-back>← Back to index</button>`;
   } else {
     notebookPage.innerHTML = `
-      <div class="nb-head"><h2>随笔</h2><span>autumn · 2026</span></div>
+      <div class="nb-head"><h2>Notes</h2><span>autumn · 2026</span></div>
       <div class="nb-list">
         ${POSTS.map(
-          (p, i) => `<button class="nb-row" data-i="${i}"><span class="nb-row__n">${String(i + 1).padStart(2, '0')}</span><span class="nb-row__t">${p.title}</span><span class="nb-row__d">${p.date}</span><span class="nb-row__tag">读这篇</span></button>`
+          (p, i) => `<button class="nb-row" data-i="${i}"><span class="nb-row__n">${String(i + 1).padStart(2, '0')}</span><span class="nb-row__t">${p.title}</span><span class="nb-row__d">${p.date}</span><span class="nb-row__tag">Read</span></button>`
         ).join('')}
       </div>`;
   }
@@ -655,7 +656,7 @@ const soundBtn = $('sound-btn');
 function toggleMusic() {
   const on = lofi.toggle();
   soundBtn.setAttribute('aria-pressed', String(on));
-  soundBtn.textContent = on ? '声音 开' : '声音 关';
+  soundBtn.textContent = on ? 'Sound On' : 'Sound Off';
 }
 soundBtn.addEventListener('click', toggleMusic);
 
@@ -744,7 +745,7 @@ loader.load(
     scene.add(gltf.scene);
     updateCamera();
     renderer.compile(scene, camera);
-    $('loader-hint').textContent = '好了';
+    $('loader-hint').textContent = 'Ready';
     // start half a step back (slightly tighter, never wider) and walk in
     const home = rigFor('home');
     const dir = new THREE.Vector3(home.tx - home.px, home.ty - home.py, home.tz - home.pz).normalize();
@@ -769,11 +770,11 @@ loader.load(
     if (!e.total) return;
     const p = Math.round((e.loaded / e.total) * 100);
     $('loader-fill').style.width = `${p}%`;
-    $('loader-hint').textContent = `正在把房间剪出来… ${p}%`;
+    $('loader-hint').textContent = `Cutting out the room… ${p}%`;
   },
   (err) => {
     console.error(err);
-    $('loader-hint').textContent = '模型加载失败，请刷新';
+    $('loader-hint').textContent = 'The room failed to load. Please refresh.';
   }
 );
 

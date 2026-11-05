@@ -42,8 +42,8 @@ export function sampleDay(hours) {
 }
 
 const PERIODS = [
-  [0, '深夜'], [4.5, '破晓'], [6.5, '清晨'], [9, '上午'], [11.5, '正午'],
-  [13.5, '午后'], [16.5, '傍晚'], [18, '黄昏'], [19.5, '入夜'], [22, '深夜'],
+  [0, 'late night'], [4.5, 'dawn'], [6.5, 'morning'], [9, 'daytime'], [11.5, 'noon'],
+  [13.5, 'afternoon'], [16.5, 'evening'], [18, 'sunset'], [19.5, 'nightfall'], [22, 'late night'],
 ];
 
 export function periodName(hours) {
