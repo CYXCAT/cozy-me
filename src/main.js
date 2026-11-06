@@ -7,10 +7,38 @@ import gsap from 'gsap';
 import { sampleDay, periodName, formatTime } from './daycycle.js';
 import { createLofi } from './lofi.js';
 import { STATIONS, HOTSPOTS, SCREEN_CORNERS, BOOK, HINTS, BACK_LABEL } from './stations.js';
-import { WORKS, POSTS, ABOUT } from './content.js';
+import { SITE, WORKS, POSTS, ABOUT } from './content.js';
 
 const $ = (id) => document.getElementById(id);
 const V3 = (a) => new THREE.Vector3(...a);
+
+document.title = SITE.title;
+document.querySelector('meta[name="description"]').content = SITE.description;
+$('site-title').textContent = SITE.title;
+$('site-tagline').textContent = SITE.tagline;
+$('loader-title').textContent = SITE.title;
+$('loader-tagline').textContent = SITE.tagline;
+
+const escapeHTML = (value) => value.replace(/[&<>"']/g, (char) => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;',
+}[char]));
+
+function renderRichText(value) {
+  return value
+    .trim()
+    .split(/\n\s*\n/)
+    .map((block) => {
+      const heading = block.match(/^\*\*(.+)\*\*$/);
+      const section = block.match(/^\*\*(.+)\*\*\n([\s\S]+)$/);
+      if (section) {
+        return `<h4>${escapeHTML(section[1])}</h4><p>${escapeHTML(section[2]).replace(/\n/g, '<br>')}</p>`;
+      }
+      return heading
+        ? `<h4>${escapeHTML(heading[1])}</h4>`
+        : `<p>${escapeHTML(block).replace(/\n/g, '<br>')}</p>`;
+    })
+    .join('');
+}
 
 // ============================================================ renderer / scene
 const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
@@ -510,10 +538,10 @@ function renderWorks() {
       <p class="screen__path">~/works/${state.workIndex + 1}</p>
       <div class="work-detail">
         <span class="work-detail__thumb" style="background:${w.tint}"></span>
-        <div>
+        <div class="work-detail__copy">
           <h3>${w.title}</h3>
           <p class="work-detail__meta">${w.meta}</p>
-          <p>${w.body}</p>
+          <div class="rich-text">${renderRichText(w.body)}</div>
           ${w.link ? `<a href="${w.link}" target="_blank" rel="noopener">Open link ↗</a>` : ''}
         </div>
       </div>
@@ -580,7 +608,7 @@ function renderNotebook() {
     notebookPage.innerHTML = `
       <div class="nb-head"><h2>${p.title}</h2></div>
       <p class="nb-date">${p.date}</p>
-      <div class="nb-article"><p>${p.body}</p></div>
+      <div class="nb-article rich-text">${renderRichText(p.body)}</div>
       <button class="nb-back" data-back>← Back to index</button>`;
   } else {
     notebookPage.innerHTML = `
