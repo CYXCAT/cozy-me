@@ -41,7 +41,7 @@ export const BOOK = { pos: [-1.374, 3.765, -1.915], size: [0.075, 0.3, 0.05] };
 
 export const HINTS = {
   home: 'W Works · R Notebook · B Bookshelf · M Record player · T Top view · Drag to look · Scroll through time',
-  works: '← → Browse · Enter to open · Esc back to room',
+  works: 'Click the monitor to unlock · Esc back to room',
   notes: 'Choose an entry to read · Esc to put down',
   about: 'Click the lamp to toggle it · Esc back to room',
   top: 'A view from above · Esc back to room · Scroll through time',

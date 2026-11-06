@@ -234,6 +234,7 @@ const state = {
   screenOn: 0,
   workIndex: 0,
   workOpen: false,
+  worksOverlayOpen: false,
   hover: null,
   ready: false,
 };
@@ -315,6 +316,7 @@ function goTo(name, { duration = 1.7 } = {}) {
 
 function leave(from, to) {
   if (from === 'works') {
+    closeWorksOverlay(true);
     hideScreen();
     gsap.to(state, { screenOn: 0, duration: 0.6 });
   }
@@ -367,7 +369,11 @@ function setHover(k) {
 }
 
 function runAction(a) {
-  if (a === 'works' || a === 'notes' || a === 'about') goTo(a);
+  if (a === 'works') {
+    if (state.station === 'works' && !state.moving) openWorksOverlay();
+    else goTo(a);
+  }
+  if (a === 'notes' || a === 'about') goTo(a);
   if (a === 'rain') {
     state.rainOn = !state.rainOn;
     gsap.to(state, { rain: state.rainOn ? 1 : 0, duration: 1.6 });
@@ -518,7 +524,7 @@ $('time-btn').addEventListener('click', () => {
 window.addEventListener(
   'wheel',
   (e) => {
-    if (!state.ready || e.target.closest('.notebook, .bookpage, .screen')) return;
+    if (!state.ready || e.target.closest('.notebook, .bookpage, .screen, .works-overlay')) return;
     setTime(state.time + e.deltaY * 0.0025);
   },
   { passive: true }
@@ -528,13 +534,16 @@ window.addEventListener(
 const screenEl = $('screen');
 const screenInner = $('screen-inner');
 const screenBody = $('screen-body');
+const worksOverlay = $('works-overlay');
+const worksOverlayPanel = $('works-overlay-panel');
+const worksOverlayBody = $('works-overlay-body');
 const SCREEN_BASE = { w: 846, h: 478 };
 const screenPts = SCREEN_CORNERS.map(V3);
 
 function renderWorks() {
   if (state.workOpen) {
     const w = WORKS[state.workIndex];
-    screenBody.innerHTML = `
+    worksOverlayBody.innerHTML = `
       <p class="screen__path">~/works/${state.workIndex + 1}</p>
       <div class="work-detail">
         <span class="work-detail__thumb" style="background:${w.tint}"></span>
@@ -547,7 +556,7 @@ function renderWorks() {
       </div>
       <p class="screen__hint">Backspace to list · ← → Previous / Next</p>`;
   } else {
-    screenBody.innerHTML = `
+    worksOverlayBody.innerHTML = `
       <p class="screen__path">~/works · ${WORKS.length} projects</p>
       <div class="works">
         ${WORKS.map(
@@ -562,7 +571,7 @@ function renderWorks() {
       <p class="screen__hint">← → Select · Enter to open · Everything on screen is clickable</p>`;
   }
 }
-screenBody.addEventListener('click', (e) => {
+worksOverlayBody.addEventListener('click', (e) => {
   const b = e.target.closest('.work');
   if (!b) return;
   state.workIndex = +b.dataset.i;
@@ -571,11 +580,46 @@ screenBody.addEventListener('click', (e) => {
 });
 function showScreen() {
   state.workOpen = false;
-  renderWorks();
+  screenBody.innerHTML = `
+    <button class="screen-lock" type="button" aria-label="Click to unlock selected work">
+      <span class="screen-lock__icon" aria-hidden="true">⌁</span>
+      <strong>Click to unlock</strong>
+      <span>Selected work is waiting behind this screen.</span>
+    </button>`;
   screenEl.setAttribute('aria-hidden', 'false');
   gsap.fromTo(screenEl, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5 });
   gsap.fromTo(screenInner, { filter: 'brightness(2.5) blur(4px)' }, { filter: 'brightness(1) blur(0px)', duration: 0.7, ease: 'power2.out' });
 }
+function openWorksOverlay() {
+  if (state.station !== 'works' || state.moving || state.worksOverlayOpen) return;
+  state.worksOverlayOpen = true;
+  state.workOpen = false;
+  renderWorks();
+  $('app').classList.add('is-blurred');
+  worksOverlay.setAttribute('aria-hidden', 'false');
+  worksOverlay.style.pointerEvents = 'auto';
+  gsap.fromTo(worksOverlay, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25 });
+  gsap.fromTo(
+    worksOverlayPanel,
+    { y: 40, scale: 0.92, rotate: 1.5 },
+    { y: 0, scale: 1, rotate: -0.35, duration: 0.65, ease: 'power3.out' }
+  );
+}
+function closeWorksOverlay(immediate = false) {
+  if (!state.worksOverlayOpen && !immediate) return;
+  state.worksOverlayOpen = false;
+  $('app').classList.remove('is-blurred');
+  worksOverlay.setAttribute('aria-hidden', 'true');
+  worksOverlay.style.pointerEvents = 'none';
+  if (immediate) {
+    gsap.set(worksOverlay, { autoAlpha: 0 });
+    return;
+  }
+  gsap.to(worksOverlayPanel, { y: 28, scale: 0.96, rotate: 1, duration: 0.25, ease: 'power2.in' });
+  gsap.to(worksOverlay, { autoAlpha: 0, duration: 0.25 });
+}
+screenEl.addEventListener('click', openWorksOverlay);
+$('works-overlay-close').addEventListener('click', () => closeWorksOverlay());
 function hideScreen() {
   screenEl.setAttribute('aria-hidden', 'true');
   gsap.to(screenEl, { autoAlpha: 0, duration: 0.25 });
@@ -660,8 +704,8 @@ const bookpage = $('bookpage');
 bookpage.innerHTML = `
   <p class="bp-kicker">${ABOUT.kicker}</p>
   <h2>${ABOUT.title}</h2>
-  ${ABOUT.paragraphs.map((p) => `<p class="bp-p">${p}</p>`).join('')}
-  <div class="bp-links">${ABOUT.links.map((l) => `<a href="${l.href}" target="_blank" rel="noopener"><span>${l.label}</span><span>${l.value} ↗</span></a>`).join('')}</div>`;
+  <div class="bp-links">${ABOUT.links.map((l) => `<a href="${l.href}" target="_blank" rel="noopener"><span>${l.label}</span><span>${l.value} ↗</span></a>`).join('')}</div>
+  ${ABOUT.paragraphs.map((p) => `<p class="bp-p">${p}</p>`).join('')}`;
 function showBookpage() {
   bookpage.setAttribute('aria-hidden', 'false');
   const { fill, edges } = bookGlow.userData;
@@ -693,17 +737,19 @@ window.addEventListener('keydown', (e) => {
   if (!state.ready || e.metaKey || e.ctrlKey || e.altKey) return;
   const k = e.key.toLowerCase();
   if (k === 'escape') {
-    if (state.station === 'notes' && openPost >= 0) {
-      openPost = -1;
-      flipNotebook();
-    } else if (state.station === 'works' && state.workOpen) {
+    if (state.station === 'works' && state.worksOverlayOpen && state.workOpen) {
       state.workOpen = false;
       renderWorks();
+    } else if (state.station === 'works' && state.worksOverlayOpen) {
+      closeWorksOverlay();
+    } else if (state.station === 'notes' && openPost >= 0) {
+      openPost = -1;
+      flipNotebook();
     } else goTo('home');
     return;
   }
   if (k === 'm') return toggleMusic();
-  if (state.station === 'works' && !state.moving) {
+  if (state.station === 'works' && state.worksOverlayOpen && !state.moving) {
     if (k === 'arrowright' || k === 'arrowleft') {
       const d = k === 'arrowright' ? 1 : -1;
       state.workIndex = (state.workIndex + d + WORKS.length) % WORKS.length;

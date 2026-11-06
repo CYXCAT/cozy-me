@@ -134,6 +134,46 @@ body.is-loading .wordmark, body.is-loading .nav, body.is-loading .hints, body.is
 .work-detail h4 { margin: 20px 0 5px; font-family: var(--hand); font-size: 19px; font-weight: 400; color: var(--rose); }
 .work-detail a { color: #2f5a8a; font-family: var(--mono); font-size: 13px; }
 
+.screen-lock {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent;
+  box-shadow: none; text-align: center; cursor: pointer; color: var(--paper-ink);
+}
+.screen-lock:hover, .screen-lock:focus-visible { background: rgba(255,255,255,.22); box-shadow: none; transform: none; }
+.screen-lock__icon {
+  display: grid; place-items: center; width: 70px; height: 70px; margin-bottom: 14px;
+  border: 2px solid currentColor; border-radius: 50%; font-family: var(--hand); font-size: 44px;
+  transform: rotate(-5deg); background: rgba(255,255,255,.28);
+}
+.screen-lock strong { font-family: var(--hand); font-size: 38px; font-weight: 400; }
+.screen-lock > span:last-child { margin-top: 7px; font-family: var(--mono); font-size: 12px; color: #6f5a4c; }
+
+.works-overlay {
+  position: fixed; inset: 0; z-index: 24; display: grid; place-items: center; padding: 6vh 7vw;
+  visibility: hidden; opacity: 0; pointer-events: none; background: rgba(25, 18, 14, .24);
+}
+.works-overlay__panel.paper {
+  display: flex; flex-direction: column; width: min(1080px, 86vw); height: min(720px, 84vh);
+  margin: 0; padding: 0; overflow: hidden; border-width: 2.5px; border-color: var(--paper-ink);
+  background-color: rgba(246, 240, 228, .88); background-image: var(--grain);
+  color: var(--paper-ink); box-shadow: 18px 36px 70px -24px rgba(0,0,0,.82);
+  backdrop-filter: blur(18px) saturate(.78); -webkit-backdrop-filter: blur(18px) saturate(.78);
+}
+.works-overlay__bar {
+  display: flex; align-items: center; gap: 18px; min-height: 54px; padding: 0 22px;
+  border-bottom: 2px dashed #b9a78f; background: rgba(215, 196, 165, .55);
+  font-family: var(--hand); font-size: 17px;
+}
+.works-overlay__bar b { font-size: 23px; font-weight: 400; }
+.works-overlay__bar > span { color: #6f5a4c; }
+.works-overlay__close { margin-left: auto; flex: none; }
+.works-overlay__body { display: flex; flex: 1; min-height: 0; flex-direction: column; padding: 28px 34px 24px; }
+.works-overlay .works { flex: 1; align-items: stretch; }
+.works-overlay .work { height: 100%; }
+.works-overlay .work__thumb { height: min(25vh, 190px); }
+.works-overlay .work-detail { grid-template-columns: minmax(260px, 38%) 1fr; }
+.works-overlay .work-detail__thumb { height: min(40vh, 360px); }
+
 /* ------------------------------------------------ notebook */
 .notebook {
   position: fixed; left: 50%; top: 50%; z-index: 20; width: min(600px, 44vw); height: min(760px, 84vh);
@@ -187,7 +227,7 @@ body.is-loading .wordmark, body.is-loading .nav, body.is-loading .hints, body.is
 .bp-kicker { margin: 0; font-family: var(--mono); font-size: 11px; letter-spacing: 3px; color: #7a6a5c; }
 .bookpage h2 { margin: 14px 0 0; font-family: var(--serif); font-weight: 900; font-size: 46px; line-height: 1.1; }
 .bp-p { margin: 18px 0 0; font-family: var(--serif); font-size: 16px; line-height: 1.95; }
-.bp-links { margin-top: 28px; border-top: 1px solid #d8ccb8; }
+.bp-links { margin: 24px 0 28px; border-top: 1px solid #d8ccb8; }
 .bp-links a {
   display: flex; align-items: center; justify-content: space-between; min-height: 52px;
   border-bottom: 1px solid #d8ccb8; color: #2b2622; text-decoration: none; font-size: 15px;
@@ -356,6 +396,18 @@ button, .paper-btn, [type='button'] { font-family: var(--sans); }
 .bp-links { border-top: 2px dashed #c8b8a1; }
 .bp-links a { border-bottom: 2px dashed #c8b8a1; background-image: none; }
 .bp-links a:hover { padding-left: 8px; color: var(--rose); }
+
+@media (max-width: 760px) {
+  .works-overlay { padding: 4vh 4vw; }
+  .works-overlay__panel.paper { width: 92vw; height: 88vh; }
+  .works-overlay__bar > span { display: none; }
+  .works-overlay__body { padding: 20px; overflow: auto; }
+  .works-overlay .works { grid-template-columns: 1fr; }
+  .works-overlay .work { height: auto; }
+  .works-overlay .work-detail { grid-template-columns: 1fr; overflow: visible; }
+  .works-overlay .work-detail__thumb { height: 190px; }
+  .works-overlay .work-detail__copy { overflow: visible; }
+}
 
 #loader {
   color: var(--paper-ink); background-color: #e7dac5;
